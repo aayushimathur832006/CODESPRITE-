@@ -6,7 +6,8 @@ let allProblems = [];
 
 // --- AUTHENTICATION ---
 // --- CONFIGURATION ---
-const BASE_URL = "http://localhost:3000/api";
+// script.js ke sabse upar ise replace karo:
+const BASE_URL = "https://codesprite-backend.onrender.com/api";
 
 // --- AUTHENTICATION ---
 async function handleSignup(email, password) {
