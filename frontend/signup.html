@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Signup | CODESPRITE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>body { background: #0d0d17; color: white; font-family: sans-serif; }</style>
+</head>
+<body class="flex items-center justify-center h-screen">
+    <div class="bg-[#1a1a2e] p-10 rounded-3xl shadow-2xl w-full max-w-md border border-white/10 text-center">
+        <h2 class="text-3xl font-black text-[#ff2e63] mb-2">Create Account</h2>
+        <p class="text-gray-400 mb-8 text-sm">Join the placement preparation arena</p>
+        
+        <input type="text" id="regName" placeholder="Full Name" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl mb-4 text-sm outline-none focus:border-[#ff2e63] transition">
+        <input type="email" id="regEmail" placeholder="College Email" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl mb-4 text-sm outline-none focus:border-[#ff2e63] transition">
+        <input type="password" id="regPassword" placeholder="Password" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl mb-6 text-sm outline-none focus:border-[#ff2e63] transition">
+        
+      <button onclick="handleSignup(document.getElementById('regEmail').value, document.getElementById('regPassword').value)" 
+    class="w-full py-5 bg-[#ff2e63] ...">
+    Create Account
+</button>
+        
+        <p class="mt-6 text-xs text-gray-500">Already a member? <a href="login.html" class="text-[#08d9d6] hover:underline">Log in</a></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

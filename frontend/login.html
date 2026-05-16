@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login | CODESPRITE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>body { background: #0d0d17; color: white; font-family: sans-serif; }</style>
+</head>
+<body class="flex items-center justify-center h-screen">
+    <div class="bg-[#1a1a2e] p-10 rounded-3xl shadow-2xl w-full max-w-md border border-white/10 text-center">
+        <h2 class="text-3xl font-black text-[#08d9d6] mb-2">Welcome Back</h2>
+        <p class="text-gray-400 mb-8 text-sm">Access your main dashboard</p>
+        
+        <input type="email" id="email" placeholder="Email Address" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl mb-4 text-sm outline-none focus:border-[#08d9d6] transition">
+        <input type="password" id="password" placeholder="Password" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl mb-6 text-sm outline-none focus:border-[#08d9d6] transition">
+        
+       <button onclick="handleLogin(document.getElementById('email').value, document.getElementById('password').value)" 
+    class="w-full py-4 bg-[#08d9d6] ...">
+    Launch Session
+</button>
+        
+        <p class="mt-6 text-xs text-gray-500">Don't have an account? <a href="signup.html" class="text-[#ff2e63] hover:underline">Create one</a></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
