@@ -1,12 +1,11 @@
-const AUTH_API_URL = "http://127.0.0.1:5001/api/auth"; // Change 5000 to 5001
-const COMPILER_URL = "http://127.0.0.1:5001/api/run"; // Python Flask Port
+const AUTH_API_URL = "https://codesprite-backend.onrender.com/api/auth"; 
+const COMPILER_URL = "https://codesprite-backend.onrender.com/api/run"; 
 const LEETCODE_API = "https://alfa-leetcode-api.onrender.com/problems?limit=500";
 
 let allProblems = [];
 
-// --- AUTHENTICATION ---
 // --- CONFIGURATION ---
-// script.js ke sabse upar ise replace karo:
+// Changed from localhost to live Render URL
 const BASE_URL = "https://codesprite-backend.onrender.com/api";
 
 // --- AUTHENTICATION ---
@@ -14,7 +13,7 @@ async function handleSignup(email, password) {
     if(!email || !password) return alert("Please fill all fields.");
     
     try {
-        const res = await fetch(`${BASE_URL}/auth/register`, { // Matches server.js route
+        const res = await fetch(`${BASE_URL}/auth/register`, { 
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })
@@ -30,7 +29,7 @@ async function handleSignup(email, password) {
         }
     } catch (err) {
         console.error("Signup error:", err);
-        alert("Backend Server Offline! (Check Port 3000)");
+        alert("Authentication service is temporarily unavailable. Please try again later.");
     }
 }
 
@@ -49,13 +48,13 @@ async function handleLogin(email, password) {
         if (res.ok) {
             alert("Welcome back!");
             localStorage.setItem("userEmail", data.email);
-            window.location.href = 'dashboard.html'; // Redirects now
+            window.location.href = 'dashboard.html'; 
         } else {
-            alert(data.message || "Invalid Credentials");
+            alert(data.message || "Invalid credentials. Please try again.");
         }
     } catch (err) {
         console.error("Login error:", err);
-        alert("Backend Server Offline! (Check Port 3000)");
+        alert("Authentication service is temporarily unavailable. Please try again later.");
     }
 }
 
@@ -65,21 +64,14 @@ document.addEventListener("DOMContentLoaded", () => {
         fetchProblems();
     }
 });
+
 function logoutUser() {
-    // 1. LocalStorage se user ki info delete karo
     localStorage.removeItem("userEmail");
-    
-    // 2. Alert dikhao (optional)
-    alert("Session Terminated. Logging out...");
-    
-    // 3. Login page par redirect karo
+    alert("Logging out successfully...");
     window.location.href = "login.html";
 }
 
-// --- ATS ANALYZER ---
-// --- Updated analyzeResume function ---
-
-
+// --- ATS RESUME ANALYZER ---
 async function analyzeResume() {
     const fileInput = document.getElementById('resumeUpload');
     const analyzeBtn = document.getElementById('analyzeBtn');
@@ -98,8 +90,8 @@ async function analyzeResume() {
     formData.append("resume", fileInput.files[0]);
 
     try {
-        // Points to your Node.js backend port
-        const res = await fetch("http://localhost:3000/api/analyze-resume", {
+        // Pointing to online Render endpoint instead of localhost:3000
+        const res = await fetch(`${BASE_URL}/analyze-resume`, {
             method: 'POST',
             body: formData
         });
@@ -107,13 +99,9 @@ async function analyzeResume() {
 
         if (data.error) throw new Error(data.error);
 
-        // Show result section
         resultSection.classList.remove('opacity-30');
-        
-        // Animate the Score Gauge
         updateGauge(data.score);
 
-        // Display Skills with professional badges
         skillsList.innerHTML = `
             <div class="p-4 rounded-2xl bg-green-500/10 border border-green-500/20">
                 <p class="text-[10px] font-black uppercase text-green-400 mb-2">Key Skills Found</p>
@@ -130,13 +118,13 @@ async function analyzeResume() {
         `;
 
     } catch (err) {
-        alert(err.message);
+        alert(err.message || "Failed to analyze resume. Please try again.");
     } finally {
         analyzeBtn.innerText = "Analyze Now";
         analyzeBtn.disabled = false;
     }
 }
-// Function to calculate the SVG stroke-dashoffset
+
 function updateGauge(score) {
     const circle = document.getElementById('progressCircle');
     const text = document.getElementById('scoreText');
@@ -146,7 +134,6 @@ function updateGauge(score) {
     const offset = circumference - (score / 100) * circumference;
     circle.style.strokeDashoffset = offset;
 
-    // Counter animation for the text
     let count = 0;
     const interval = setInterval(() => {
         if (count >= score) clearInterval(interval);
@@ -154,7 +141,8 @@ function updateGauge(score) {
         count++;
     }, 15);
 }
-// --- DSA ARENA (coding.html) ---
+
+// --- DSA ARENA ---
 let globalProblems = [];
 
 async function fetchProblems() {
@@ -162,38 +150,31 @@ async function fetchProblems() {
     if (!container) return;
     
     try {
-        // Step 1: Fetch first 100 problems
         const res1 = await fetch("https://alfa-leetcode-api.onrender.com/problems?limit=100");
         const data1 = await res1.json();
         
-        // Step 2: Fetch next 100 problems (using skip/offset if supported, or a different limit)
-        // If the API doesn't support skip, we fetch a larger set and slice it
         const res2 = await fetch("https://alfa-leetcode-api.onrender.com/problems?limit=250");
         const data2 = await res2.json();
 
-        // Combine them and remove duplicates based on ID
         const combined = [...data1.problemsetQuestionList, ...data2.problemsetQuestionList];
-        
-        // Filter unique problems only
         globalProblems = Array.from(new Map(combined.map(item => [item.questionFrontendId, item])).values());
 
-        // Step 3: If still under 200, we "pad" the list for the interview impression
         if (globalProblems.length < 200) {
             console.log("Padding list for visual impression...");
             const padding = globalProblems.slice(0, 100).map(p => ({
                 ...p,
-                questionFrontendId: parseInt(p.questionFrontendId) + 500, // Make ID look unique
-                title: p.title + " (Variant B)" // Make title look unique
+                ...p,
+                questionFrontendId: parseInt(p.questionFrontendId) + 500, 
+                title: p.title + " (Variant B)" 
             }));
             globalProblems = [...globalProblems, ...padding];
         }
 
-        console.log("Total Problems for Display:", globalProblems.length);
         renderProblems(globalProblems);
 
     } catch (error) {
         console.error("Fetch Error:", error);
-        container.innerHTML = `<p class="text-red-500 text-xs p-4">Failed to load problems. Check API.</p>`;
+        container.innerHTML = `<p class="text-red-500 text-xs p-4">Failed to load problems. Please refresh the page.</p>`;
     }
 }
 
@@ -235,8 +216,3 @@ function renderProblems(problems) {
         container.appendChild(card);
     });
 }
-
-// Initialize fetches on page load
-document.addEventListener("DOMContentLoaded", () => {
-    fetchProblems();
-});
