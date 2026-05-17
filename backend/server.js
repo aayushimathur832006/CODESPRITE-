@@ -19,7 +19,7 @@ app.post('/api/auth/register', (req, res) => {
     console.log(`📝 Signup Attempt: ${email}`);
 
     if (users.find(u => u.email === email)) {
-        return res.status(400).json({ success: false, message: "Bhai, user already exists!" });
+        return res.status(400).json({ success: false, message: " user already exists!" });
     }
 
     users.push({ email, password });
