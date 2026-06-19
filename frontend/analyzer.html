@@ -130,8 +130,7 @@
     </div>
 
     <script>
-    // --- GLOBAL BASE URL CONFIGURATION ---
-    // Change this to "http://localhost:3000/api" if testing backend locally on your machine
+  
     const LIVE_BACKEND_URL = "https://codesprite-backend.onrender.com/api";
 
     function updateFileName() {
@@ -163,7 +162,7 @@
         formData.append("resume", fileInput.files[0]);
 
         try {
-            // Standardizing the dynamic routing endpoint
+      
             const res = await fetch(`${LIVE_BACKEND_URL}/analyze-resume`, {
                 method: "POST",
                 body: formData
@@ -176,11 +175,10 @@
                 throw new Error(data.error);
             }
 
-            // Make result section visible smoothly
+        
             resultSection.classList.remove('opacity-40');
             resultSection.classList.add('opacity-100');
 
-            // Gauge calculations
             const targetScore = data.score || 0;
             const radius = 65;
             const circumference = 2 * Math.PI * radius;
@@ -201,7 +199,7 @@
                 }, 15);
             }
 
-            // Render Found Skills
+        
             const foundSkillsContainer = document.getElementById('foundSkills');
             if (data.skills && data.skills.length > 0) {
                 foundSkillsContainer.innerHTML = data.skills.map(skill => `
@@ -211,7 +209,6 @@
                 foundSkillsContainer.innerHTML = `<span class="text-[8px] text-gray-500 font-bold uppercase italic">No Skills Found</span>`;
             }
 
-            // Render Missing Skills
             const missingSkillsContainer = document.getElementById('missingSkills');
             if (data.missing && data.missing.length > 0) {
                 missingSkillsContainer.innerHTML = data.missing.map(skill => `
