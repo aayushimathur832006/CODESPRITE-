@@ -6,14 +6,12 @@ const pdfParse = require('pdf-parse-fork');
 
 const app = express();
 app.use(cors());
-app.use(express.json()); // <--- IMPORTANT: JSON data padhne ke liye zaroori hai
+app.use(express.json()); 
 
 const upload = multer({ storage: multer.memoryStorage() });
 
-// --- MOCK DATABASE (Abhi ke liye memory mein, baad mein MongoDB se connect karna) ---
 const users = []; 
 
-// --- 1. SIGNUP ROUTE ---
 app.post('/api/auth/register', (req, res) => {
     const { email, password } = req.body;
     console.log(`📝 Signup Attempt: ${email}`);
@@ -42,7 +40,6 @@ app.post('/api/auth/login', (req, res) => {
     }
 });
 
-// --- 3. RESUME ANALYZER ROUTE ---
 app.post('/api/analyze-resume', upload.single('resume'), async (req, res) => {
     try {
         if (!req.file) return res.status(400).json({ error: "No file uploaded" });
@@ -68,8 +65,6 @@ app.post('/api/analyze-resume', upload.single('resume'), async (req, res) => {
         res.status(500).json({ error: "Server failed to read PDF: " + err.message });
     }
 });
-
-// --- 4. INTERVIEW QUESTIONS ---
 app.get('/api/interview-questions', async (req, res) => {
     try {
         const response = await axios.get("https://alfa-leetcode-api.onrender.com/problems?limit=100");
