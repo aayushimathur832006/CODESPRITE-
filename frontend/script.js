@@ -4,11 +4,8 @@ const LEETCODE_API = "https://alfa-leetcode-api.onrender.com/problems?limit=500"
 
 let allProblems = [];
 
-// --- CONFIGURATION ---
-// Changed from localhost to live Render URL
 const BASE_URL = "https://codesprite-backend.onrender.com/api";
 
-// --- AUTHENTICATION ---
 async function handleSignup(email, password) {
     if(!email || !password) return alert("Please fill all fields.");
     
@@ -58,7 +55,6 @@ async function handleLogin(email, password) {
     }
 }
 
-// Ensure fetchProblems is called only on the correct page
 document.addEventListener("DOMContentLoaded", () => {
     if (document.getElementById("questionsContainer")) {
         fetchProblems();
@@ -90,7 +86,6 @@ async function analyzeResume() {
     formData.append("resume", fileInput.files[0]);
 
     try {
-        // Pointing to online Render endpoint instead of localhost:3000
         const res = await fetch(`${BASE_URL}/analyze-resume`, {
             method: 'POST',
             body: formData
@@ -142,7 +137,6 @@ function updateGauge(score) {
     }, 15);
 }
 
-// --- DSA ARENA ---
 let globalProblems = [];
 
 async function fetchProblems() {
