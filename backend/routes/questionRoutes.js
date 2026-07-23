@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const Question = require("../m/Question"); // Folder path check kar lena
+const Question = require("../m/Question"); 
 
-// Naya sawal add karne ke liye (Postman se use kar sakte ho)
 router.post("/", async (req, res) => {
   try {
     const q = new Question(req.body);
@@ -13,7 +12,6 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Dashboard par dikhane ke liye saare questions fetch karna
 router.get("/", async (req, res) => {
   try {
     const questions = await Question.find();
