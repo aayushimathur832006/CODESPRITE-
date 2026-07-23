@@ -3,7 +3,6 @@ const router = express.Router();
 const User = require("../m/user"); 
 const bcrypt = require("bcryptjs");
 
-// --- REGISTER ---
 router.post("/register", async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -12,7 +11,6 @@ router.post("/register", async (req, res) => {
         const existingUser = await User.findOne({ email });
         if (existingUser) return res.status(400).json({ message: "User exists!" });
 
-        // Hash the password before saving
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -24,7 +22,6 @@ router.post("/register", async (req, res) => {
     }
 });
 
-// --- LOGIN ---
 router.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -32,7 +29,6 @@ router.post("/login", async (req, res) => {
         
         if (!user) return res.status(401).json({ message: "Invalid credentials" });
 
-        // Compare hashed password
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(401).json({ message: "Invalid credentials" });
 
