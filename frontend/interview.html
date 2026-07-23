@@ -17,7 +17,7 @@
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.03);
         }
-        /* Circular Avatar Container to match image_765dd5.png */
+       
         .avatar-circle-wrapper {
             position: relative;
             width: 280px;
@@ -36,7 +36,7 @@
             border-radius: 50%;
             transition: all 0.4s ease;
         }
-        /* Pulsing effect when AI talks */
+
         .speaking-active .avatar-img {
             filter: drop-shadow(0 0 30px #8b5cf6);
             transform: scale(1.05);
@@ -58,14 +58,14 @@
 </head>
 <body class="h-screen flex items-center justify-center p-6">
 
-    <!-- Dashboard Link -->
+ 
     <button onclick="location.href='dashboard.html'" class="absolute top-8 left-8 text-gray-500 hover:text-white text-[10px] font-black uppercase tracking-[0.2em] transition z-50">
         ← Exit Session
     </button>
 
     <div class="max-w-6xl w-full flex flex-col md:flex-row gap-6 items-stretch">
         
-        <!-- Left Pane: AI Avatar Presence (Matches image_765dd5.png) -->
+      
         <div class="flex-1 glass-panel rounded-[3.5rem] p-12 flex flex-col items-center justify-center text-center">
             <div id="aiContainer" class="avatar-circle-wrapper mb-10">
                 <img id="aiAvatar" src="https://t3.ftcdn.net/jpg/06/33/36/82/360_F_633368225_LwDAmhPhhsEwCLN8JT1cADEne6r848sr.jpg" class="avatar-img" alt="AI Interviewer">
@@ -77,10 +77,8 @@
             </div>
         </div>
 
-        <!-- Right Pane: Conversation Interface -->
         <div class="flex-1 flex flex-col gap-6">
-            
-            <!-- Question Box -->
+           
             <div class="glass-panel rounded-[2.5rem] p-10 flex-1 flex flex-col justify-center">
                 <p class="text-[#8b5cf6] text-[10px] font-black uppercase tracking-[0.3em] mb-4">Interviewer's Question</p>
                 <h2 id="questionText" class="text-2xl font-semibold leading-relaxed text-gray-100 italic">
@@ -88,7 +86,6 @@
                 </h2>
             </div>
 
-            <!-- Interaction Controls -->
             <div class="glass-panel rounded-[2.5rem] p-8">
                 <div id="transcriptBox" class="min-h-[50px] mb-6 flex items-center">
                     <span id="transcript" class="text-[#08d9d6] text-sm italic font-medium opacity-80"></span>
